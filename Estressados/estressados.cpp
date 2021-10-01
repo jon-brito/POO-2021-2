@@ -147,6 +147,22 @@ bool homens_sao_mais_estressados_que_mulheres(std::vector<int> fila)
 
 
 //Funcoes de Menu
+void modificar_fila(std::vector<int> &fila)
+{
+    std::cout << "\n-> MODIFICAR FILA\n";
+    int qtd, estresse;
+
+    std::cout << "Digite a quantidade de pessoas na fila: ";
+    std::cin >> qtd;
+
+    fila.clear();
+    for (int i = 0; i < qtd; i++) {
+        std::cout << "Estresse " << i + 1 << ": ";
+        std::cin >> estresse;
+        fila.push_back(estresse);
+    }
+}
+
 void mostrar_fila(std::vector<int> fila)
 {
     printf("\n[ ");
@@ -204,14 +220,15 @@ void contagem(std::vector<int> fila)
 int main()
 {
     std::cout.setf(std::ios::boolalpha);
-    std::vector<int> fila = {-51, 99, 1, -50, -1, -99};
+    std::vector<int> fila = {99, 50, 1, -1, -50, -99};
 
     int escolha = 1;
     while (escolha != 0) {
         std::cout << "-=-=-FILA DOS ESTRESSADOS-=-=- \n";
-        std::cout << "[1] - Busca \n";
-        std::cout << "[2] - Melhor Caso \n";
-        std::cout << "[3] - Contagem \n";
+        std::cout << "[1] - Modificar Fila \n";
+        std::cout << "[2] - Busca \n";
+        std::cout << "[3] - Melhor Caso \n";
+        std::cout << "[4] - Contagem \n";
         std::cout << "[0] - Sair :( \n";
 
         std::cout << "Sua escolha: ";
@@ -219,12 +236,15 @@ int main()
 
         switch (escolha) {
             case 1:
-                busca(fila);
+                modificar_fila(fila);
                 break;
             case 2:
-                melhor_caso(fila);
+                busca(fila);
                 break;
             case 3:
+                melhor_caso(fila);
+                break;
+            case 4:
                 contagem(fila);
                 break;
         }
