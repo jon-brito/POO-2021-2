@@ -194,7 +194,7 @@ void contagem(std::vector<int> fila)
 {
     std::cout << "\n->CONTAGEM";    
     mostrar_fila(fila);
-    
+
     printf ("Estresse medio da fila: %.2f\n", calcular_estresse_medio(fila));
     std::cout << "Genero que mais aparece na fila: " << mais_homens_ou_mulheres(fila) << '\n';
     std::cout << "Metade mais estressada da fila: " << qual_metade_eh_mais_estressada(fila) << '\n';
@@ -218,15 +218,15 @@ int main()
         std::cin >> escolha;
 
         switch (escolha) {
-        case 1:
-            busca(fila);
-            break;
-        case 2:
-            melhor_caso(fila);
-            break;
-        case 3:
-            contagem(fila);
-            break;
+            case 1:
+                busca(fila);
+                break;
+            case 2:
+                melhor_caso(fila);
+                break;
+            case 3:
+                contagem(fila);
+                break;
         }
     }
     std::cout << "Saindo . . . \n";
