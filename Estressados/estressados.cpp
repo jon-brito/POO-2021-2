@@ -149,13 +149,16 @@ bool homens_sao_mais_estressados_que_mulheres(std::vector<int> fila)
 //Funcoes de Menu
 void mostrar_fila(std::vector<int> fila)
 {
-    printf("[ ");
+    printf("\n[ ");
     for (int x : fila) std::cout << x << " ";
     printf("]\n\n");
 }
 
 void busca(std::vector<int> fila)
 {
+    std::cout << "\n-> BUSCA";
+    mostrar_fila(fila);
+
     int num, posicao;
     std::cout << "Digite um valor: ";
     std::cin >> num;
@@ -163,31 +166,39 @@ void busca(std::vector<int> fila)
     std::cout << "Digite um index: ";
     std::cin >> posicao;
 
-    std::cout << "valor " << num << " existe: " << existe(fila, num) << '\n';
-    std::cout << "valor " << num << " aparece " << contar(fila, num) << " vez(es)" << '\n';
-    std::cout << "valor " << num << " aparece, pela primeira vez, no index: " << procurar_valor(fila, num) << '\n';
-    std::cout << "valor " << num << " aparece, pela primeira vez apos o index "
+    std::cout << "\n";
+    std::cout << "O valor " << num << " existe: " << existe(fila, num) << '\n';
+    std::cout << "O valor " << num << " aparece " << contar(fila, num) << " vez(es)" << '\n';
+    std::cout << "O valor " << num << " aparece, pela primeira vez, no index: " << procurar_valor(fila, num) << '\n';
+    std::cout << "O valor " << num << " aparece, pela primeira vez apos o index "
               << posicao << ", no index: " << procurar_valor_a_partir(fila, num, posicao) << "\n\n";
 }
 
 void melhor_caso(std::vector<int> fila)
 {
+    std::cout << "\n-> MELHOR CASO";
+    mostrar_fila(fila);
+    
     int posicao;
     std::cout << "Digite um index: ";
     std::cin >> posicao;
 
-    std::cout << "menor valor: " << procurar_menor(fila) << '\n';
-    std::cout << "posicao do menor valor: " << procurar_menor_pos(fila) << '\n';
-    std::cout << "posicao do menor valor a partir do index " << posicao << ": " << procurar_menor_pos_a_partir(fila, posicao) << '\n';
-    std::cout << "posicao do homem mais calmo: " << procurar_homem_mais_calmo_pos(fila) << "\n\n";
+    std::cout << '\n';
+    std::cout << "Menor valor: " << procurar_menor(fila) << '\n';
+    std::cout << "Posicao do menor valor: " << procurar_menor_pos(fila) << '\n';
+    std::cout << "Posicao do menor valor a partir do index " << posicao << ": " << procurar_menor_pos_a_partir(fila, posicao) << '\n';
+    std::cout << "Posicao do homem mais calmo: " << procurar_homem_mais_calmo_pos(fila) << "\n\n";
 }
 
 void contagem(std::vector<int> fila)
 {
+    std::cout << "\n->CONTAGEM";    
+    mostrar_fila(fila);
+    
     printf ("Estresse medio da fila: %.2f\n", calcular_estresse_medio(fila));
     std::cout << "Genero que mais aparece na fila: " << mais_homens_ou_mulheres(fila) << '\n';
     std::cout << "Metade mais estressada da fila: " << qual_metade_eh_mais_estressada(fila) << '\n';
-    std::cout << "Os homens são mais estressados que as mulheres? " << homens_sao_mais_estressados_que_mulheres(fila) << "\n\n";
+    std::cout << "Os homens sao mais estressados que as mulheres? " << homens_sao_mais_estressados_que_mulheres(fila) << "\n\n";
 }
 
 int main()
@@ -195,5 +206,28 @@ int main()
     std::cout.setf(std::ios::boolalpha);
     std::vector<int> fila = {-51, 99, 1, -50, -1, -99};
 
-    mostrar_fila(fila);
+    int escolha = 1;
+    while (escolha != 0) {
+        std::cout << "-=-=-FILA DOS ESTRESSADOS-=-=- \n";
+        std::cout << "[1] - Busca \n";
+        std::cout << "[2] - Melhor Caso \n";
+        std::cout << "[3] - Contagem \n";
+        std::cout << "[0] - Sair :( \n";
+
+        std::cout << "Sua escolha: ";
+        std::cin >> escolha;
+
+        switch (escolha) {
+        case 1:
+            busca(fila);
+            break;
+        case 2:
+            melhor_caso(fila);
+            break;
+        case 3:
+            contagem(fila);
+            break;
+        }
+    }
+    std::cout << "Saindo . . . \n";
 }
