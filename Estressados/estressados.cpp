@@ -95,6 +95,26 @@ int procurar_homem_mais_calmo_pos(std::vector<int> fila)
 }
 
 //Funcoes Contagem
+int tot_homens(std::vector<int> fila)
+{
+    int homens = 0;
+    for (int x : fila) {
+        if (x > 0) homens += 1;
+    }
+
+    return homens;
+}
+
+int tot_mulheres(std::vector<int> fila)
+{
+    int mulheres = 0;
+    for (int x : fila) {
+        if (x < 0) mulheres += 1;
+    }
+    
+    return mulheres;
+}
+
 float calcular_estresse_medio(std::vector<int> fila)
 {
     float somatorio = 0;
@@ -107,14 +127,8 @@ float calcular_estresse_medio(std::vector<int> fila)
 
 std::string mais_homens_ou_mulheres(std::vector<int> fila)
 {
-    int total_h = 0, total_m = 0;
-    for (int x : fila) {
-        if (x > 0) total_h++;
-        else if (x < 0) total_m++;
-    }
-
-    if (total_m > total_h) return "mulheres";
-    else if (total_h > total_m) return "homens";
+    if (tot_homens(fila) < tot_mulheres(fila)) return "mulheres";
+    else if (tot_homens(fila) > tot_mulheres(fila)) return "homens";
     else return "empate";
 }
 
@@ -136,11 +150,14 @@ std::string qual_metade_eh_mais_estressada(std::vector<int> fila)
 
 bool homens_sao_mais_estressados_que_mulheres(std::vector<int> fila)
 {
-    int estresse_h = 0, estresse_m = 0;
+    float estresse_h = 0, estresse_m = 0;
     for (int x : fila) {
         if (x > 0) estresse_h += x;
         else if (x < 0) estresse_m += abs(x);
     }
+
+    estresse_h  = estresse_h / tot_homens(fila);
+    estresse_m = estresse_m / tot_mulheres(fila);
 
     if (estresse_h > estresse_m) return true;
     else return false;
@@ -266,7 +283,7 @@ int main()
                 break;
         }
     }
-    std::cout << "Saindo . . . \n";
+    std::cout << "\nSaindo . . .\n";
 
     return 0;
 }
