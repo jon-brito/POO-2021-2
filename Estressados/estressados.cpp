@@ -2,6 +2,7 @@
 #include <cmath>
 #include <vector>
 #include <string>
+#include <cstdlib>
 
 //Funcoes Busca
 bool existe(std::vector<int> fila, int numero)
@@ -147,8 +148,18 @@ bool homens_sao_mais_estressados_que_mulheres(std::vector<int> fila)
 
 
 //Funcoes de Menu
+void clear_terminal() 
+{
+    #if defined(_WIN32) || defined(_WIN64)
+        system("cls");
+    #else
+        system("clear");
+    #endif
+}
+
 void modificar_fila(std::vector<int> &fila)
 {
+    clear_terminal();
     std::cout << "\n-> MODIFICAR FILA\n";
     int qtd, estresse;
 
@@ -161,6 +172,8 @@ void modificar_fila(std::vector<int> &fila)
         std::cin >> estresse;
         fila.push_back(estresse);
     }
+
+    std::cout << '\n';
 }
 
 void mostrar_fila(std::vector<int> fila)
@@ -172,6 +185,7 @@ void mostrar_fila(std::vector<int> fila)
 
 void busca(std::vector<int> fila)
 {
+    clear_terminal();
     std::cout << "\n-> BUSCA";
     mostrar_fila(fila);
 
@@ -186,12 +200,13 @@ void busca(std::vector<int> fila)
     std::cout << "O valor " << num << " existe: " << existe(fila, num) << '\n';
     std::cout << "O valor " << num << " aparece " << contar(fila, num) << " vez(es)" << '\n';
     std::cout << "O valor " << num << " aparece, pela primeira vez, no index: " << procurar_valor(fila, num) << '\n';
-    std::cout << "O valor " << num << " aparece, pela primeira vez apos o index "
+    std::cout << "O valor " << num << " aparece, pela primeira vez a partir do index "
               << posicao << ", no index: " << procurar_valor_a_partir(fila, num, posicao) << "\n\n";
 }
 
 void melhor_caso(std::vector<int> fila)
 {
+    clear_terminal();
     std::cout << "\n-> MELHOR CASO";
     mostrar_fila(fila);
     
@@ -208,6 +223,7 @@ void melhor_caso(std::vector<int> fila)
 
 void contagem(std::vector<int> fila)
 {
+    clear_terminal();
     std::cout << "\n->CONTAGEM";    
     mostrar_fila(fila);
 
@@ -219,6 +235,7 @@ void contagem(std::vector<int> fila)
 
 int main()
 {
+    clear_terminal();
     std::cout.setf(std::ios::boolalpha);
     std::vector<int> fila = {99, 50, 1, -1, -50, -99};
 
