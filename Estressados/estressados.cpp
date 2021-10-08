@@ -3,9 +3,13 @@
 #include <vector>
 #include <string>
 #include <cstdlib>
+
 #include "busca.hpp"
 #include "melhorcaso.hpp"
 #include "contagem.hpp"
+#include "filter.hpp"
+#include "acesso.hpp"
+#include "conjuntos.hpp"
 
 void clear_terminal() 
 {
@@ -16,12 +20,22 @@ void clear_terminal()
     #endif
 }
 
+void mostrar_fila(std::vector<int> fila)
+{
+    printf("[ ");
+    for (int x : fila) std::cout << x << " ";
+    printf("]\n\n");
+}
+
 void modificar_fila(std::vector<int> &fila)
 {
     clear_terminal();
     std::cout << "\n-> MODIFICAR FILA\n";
-    int qtd, estresse;
+    
+    std::cout << "Fila Anterior: ";
+    mostrar_fila(fila);
 
+    int qtd, estresse;
     std::cout << "Digite a quantidade de pessoas na fila: ";
     std::cin >> qtd;
 
@@ -33,13 +47,6 @@ void modificar_fila(std::vector<int> &fila)
     }
 
     std::cout << '\n';
-}
-
-void mostrar_fila(std::vector<int> fila)
-{
-    printf("\n[ ");
-    for (int x : fila) std::cout << x << " ";
-    printf("]\n\n");
 }
 
 void busca(std::vector<int> fila)
@@ -92,11 +99,76 @@ void contagem(std::vector<int> fila)
     std::cout << "Os homens sao mais estressados que as mulheres? " << homens_sao_mais_estressados_que_mulheres(fila) << "\n\n";
 }
 
+void filter(std::vector<int> fila)
+{
+    clear_terminal();
+    std::cout << "Fila clone: ";
+    mostrar_fila(clonar(fila));
+
+    std::cout << "Fila apenas com homens: ";
+    mostrar_fila(so_homens(fila));
+
+    std::cout << "Fila apenas com calmos: ";
+    mostrar_fila(so_calmos(fila));
+
+    std::cout << "Fila apenas com mulheres calmas: ";
+    mostrar_fila(so_mulheres_calmas(fila));
+}
+
+void acesso(std::vector<int>& fila)
+{
+    clear_terminal();
+
+    int escolha { };
+    std::cout << "Deseja ordenar/embaralhar/inverter fila [1/2/3]? ";
+    std::cin >> escolha;
+
+    clear_terminal();
+
+    std::cout << "Fila normal: ";
+    mostrar_fila(fila);
+
+    std::cout << "Fila com valores invertidos: ";
+    mostrar_fila(inverter_com_copia(fila));
+
+    if (escolha == 1) {
+        std::cout << "Sua fila foi ordenada: ";
+        ordenar_vetor(fila);
+        mostrar_fila(fila);
+    } else if (escolha == 2) {
+        std::cout << "Sua fila foi embaralhada: ";
+        embaralhar_velhor(fila);
+        mostrar_fila(fila);
+    } else if (escolha == 3) {
+        std::cout << "Sua fila teve os valores invertidos: ";
+        inverter_inplace(fila);
+        mostrar_fila(fila);
+    }
+
+    std::cout << "Valor sorteado da fila: " << sortear(fila) << "\n\n";
+}
+
+void conjuntos(std::vector<int> fila)
+{
+    clear_terminal();
+    std::cout << "Fila normal: ";
+    mostrar_fila(fila);
+
+    std::cout << "Fila exclusiva por valor: ";
+    mostrar_fila(exclusivos(fila));
+
+    std::cout << "Fila exclusiva por estresse: ";
+    mostrar_fila(diferentes(fila));
+
+    std::cout << "Fila dos abandonados: ";
+    mostrar_fila(abandonados(fila));
+}
+
 int main()
 {
     clear_terminal();
     std::cout.setf(std::ios::boolalpha);
-    std::vector<int> fila = {99, 50, 1, -1, -50, -99};
+    std::vector<int> fila = {1, 2, 3};
 
     int escolha = 1;
     while (escolha != 0) {
@@ -105,6 +177,9 @@ int main()
         std::cout << "[2] - Busca \n";
         std::cout << "[3] - Melhor Caso \n";
         std::cout << "[4] - Contagem \n";
+        std::cout << "[5] - Filter \n";
+        std::cout << "[6] - Acesso \n";
+        std::cout << "[7] - Conjuntos \n";
         std::cout << "[0] - Sair :( \n";
 
         std::cout << "Sua escolha: ";
@@ -122,6 +197,15 @@ int main()
                 break;
             case 4:
                 contagem(fila);
+                break;
+            case 5:
+                filter(fila);
+                break;
+            case 6:
+                acesso(fila);
+                break;
+            case 7:
+                conjuntos(fila);
                 break;
         }
     }
