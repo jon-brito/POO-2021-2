@@ -3,15 +3,19 @@
 #include <vector>
 #include <string>
 #include <cstdlib>
-
 #include "busca.hpp"
 #include "melhorcaso.hpp"
 #include "contagem.hpp"
 #include "filter.hpp"
 #include "acesso.hpp"
 #include "conjuntos.hpp"
+#include "manipulacao.hpp"
+#include "proximidade.hpp"
+#include "sequencias.hpp"
+#include "grupos.hpp"
+#include "allteracao.hpp"
 
-void clear_terminal() 
+void clear_terminal()
 {
     #if defined(_WIN32) || defined(_WIN64)
         system("cls");
@@ -164,23 +168,100 @@ void conjuntos(std::vector<int> fila)
     mostrar_fila(abandonados(fila));
 }
 
+void manipulacao(std::vector<int> fila)
+{
+    clear_terminal();
+    std::cout << "Fila: ";
+    mostrar_fila(fila);
+
+    std::cout << "Sozinhos: ";
+    mostrar_fila(sozinhos(fila));
+
+    std::cout << "Maior quantidade de ocorrencias: " << mais_ocorrencias(fila) << '\n';
+
+    std::cout << "Numeros mais recorrentes: ";
+    mostrar_fila(mais_recorrentes(fila));
+}
+
+void proximidade(std::vector<int> fila)
+{
+    clear_terminal();
+    std::cout << "Fila: ";
+    mostrar_fila(fila);
+
+    std::cout << "Quantidade de pacificacoes: " << apaziguado(fila) << "\n\n";
+    std::cout<< "Quantidade de brigas na fila: " << briga(fila) << "\n\n";
+}
+
+void sequencias(std::vector<int> fila)
+{
+    clear_terminal();
+    std::cout << "Fila: ";
+    mostrar_fila(fila);
+
+    std::cout << "Quantidade de times: " << quantos_times(fila) << "\n\n";
+    std::cout << "Maior time: ";
+    mostrar_fila(maior_time(fila));
+    std::cout << "Quantidade de pessoas sem time: " << sem_time(fila) << "\n\n";
+}
+
+void grupos(std::vector<int> fila)
+{
+    clear_terminal();
+    std::cout << "Fila: ";
+    mostrar_fila(fila);
+
+    std::cout << "Numero de possiveis casais: " << casais(fila) << "\n\n";
+
+    std::cout << "Numero de possiveis trios: " << trios(fila) << "\n\n";
+}
+
+void alteracao(std::vector<int>& fila)
+{
+    clear_terminal();
+    mostrar_fila(fila);
+
+    int escolha { };
+    std::cout << "Remover / Inserir / Dancar [1/2/3]\n" << "Sua escolha: ";
+    std::cin >> escolha;
+
+    if (escolha == 1)
+        remover(fila);
+    else if (escolha == 2)
+        inserir(fila);
+    else if (escolha == 3)
+        dancar(fila);
+    else
+        std::cout << "Nada modificado!\n\n";
+
+    std::cout << "Nova fila: ";
+    mostrar_fila(fila);
+
+   
+}
+
 int main()
 {
     clear_terminal();
     std::cout.setf(std::ios::boolalpha);
-    std::vector<int> fila = {1, 2, 3};
+    std::vector<int> fila = {1, 1, 1, 5, -1, 6, 8, 1, 1, -5};
 
     int escolha = 1;
     while (escolha != 0) {
         std::cout << "-=-=-FILA DOS ESTRESSADOS-=-=- \n";
-        std::cout << "[1] - Modificar Fila \n";
-        std::cout << "[2] - Busca \n";
-        std::cout << "[3] - Melhor Caso \n";
-        std::cout << "[4] - Contagem \n";
-        std::cout << "[5] - Filter \n";
-        std::cout << "[6] - Acesso \n";
-        std::cout << "[7] - Conjuntos \n";
-        std::cout << "[0] - Sair :( \n";
+        std::cout << "[01] - Modificar Fila \n";
+        std::cout << "[02] - Busca \n";
+        std::cout << "[03] - Melhor Caso \n";
+        std::cout << "[04] - Contagem \n";
+        std::cout << "[05] - Filter \n";
+        std::cout << "[06] - Acesso \n";
+        std::cout << "[07] - Conjuntos \n";
+        std::cout << "[08] - Manipulacao \n";
+        std::cout << "[09] - Proximidade \n";
+        std::cout << "[10] - Sequencias \n";
+        std::cout << "[11] - Grupos \n";
+        std::cout << "[12] - Alteração \n";
+        std::cout << "[00] - Sair \n";
 
         std::cout << "Sua escolha: ";
         std::cin >> escolha;
@@ -206,6 +287,21 @@ int main()
                 break;
             case 7:
                 conjuntos(fila);
+                break;
+            case 8:
+                manipulacao(fila);
+                break;
+            case 9:
+                proximidade(fila);
+                break;
+            case 10:
+                sequencias(fila);
+                break;
+            case 11:
+                grupos(fila);
+                break;
+            case 12:
+                alteracao(fila);
                 break;
         }
     }
