@@ -1,4 +1,4 @@
-//g++ test.cpp -o sfml-app -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system && ./sfml-app
+//g++ game.cpp -o sfml-app -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system && ./sfml-app
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/System.hpp>
@@ -141,7 +141,7 @@ int main() {
     text.setFillColor(sf::Color::White);
     text.setStyle(sf::Text::Bold);
 
-    sf::RenderWindow window(sf::VideoMode(W_WINDOW, H_WINDOW), "Game");
+    sf::RenderWindow window(sf::VideoMode(W_WINDOW, H_WINDOW), "Super Coin Rush");
     while (window.isOpen()) {        
         sf::Event event;
         while (window.pollEvent(event)) {
