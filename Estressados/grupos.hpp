@@ -46,6 +46,7 @@ int trios(vector<int> fila)
                 if (segundo_par) {
                     fila.erase(fila.begin() + segundo_par);
                     fila.erase(fila.begin() + primeiro_par);
+                    fila.erase(fila.begin() + i);
                     i--;
                     trios++;
                 }
