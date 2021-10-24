@@ -109,7 +109,7 @@ struct Board {
     }
 
     bool checkNewBubble() {
-        static const int new_bubble_timeout {FPS / 2};
+        static const int new_bubble_timeout {25};
         static int new_bubble_timer {0};
 
         new_bubble_timer--;
