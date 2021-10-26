@@ -8,7 +8,7 @@
 
 #define STEP 100
 #define W_WINDOW 900
-#define H_WINDOW 700
+#define H_WINDOW 600
 
 void setSize(sf::Sprite& sprite, int width, int height) {
     auto rect = sprite.getLocalBounds();
