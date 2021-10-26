@@ -73,15 +73,9 @@ struct Coin {
 };
 
 struct Board {
-    int nc {0};
-    int nl {0};
-    int step {0};
     sf::Sprite sprite;
 
-    Board(int nc, int nl, int step, sf::Texture& texture) {
-        this->nc = nc;
-        this->nl = nl;
-        this->step = step;
+    Board(sf::Texture& texture) {
         this->sprite.setTexture(texture);
         setSize(this->sprite, W_WINDOW, H_WINDOW);
         this->sprite.setPosition(0, 0);
@@ -110,7 +104,6 @@ void moveEntity(sf::Keyboard::Key key, Entity& entity, std::vector<sf::Keyboard:
     }
 }
 
-
 int main() {
     srand(time(NULL));
 
@@ -132,7 +125,7 @@ int main() {
 
     Entity runner(3, 2, STEP, runner_text, buffer);
     Coin goldcoin(STEP, gold_coin_text);
-    Board board(H_WINDOW / STEP, W_WINDOW / STEP, STEP, background_text);
+    Board board(background_text);
 
     sf::Text text;
     text.setFont(font);
@@ -140,6 +133,8 @@ int main() {
     text.setCharacterSize(40);
     text.setFillColor(sf::Color::White);
     text.setStyle(sf::Text::Bold);
+    text.setOutlineColor(sf::Color::Black);
+    text.setOutlineThickness(2);
 
     sf::RenderWindow window(sf::VideoMode(W_WINDOW, H_WINDOW), "Super Coin Rush");
     while (window.isOpen()) {        
