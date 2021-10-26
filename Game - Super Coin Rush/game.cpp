@@ -41,6 +41,18 @@ struct Entity {
         this->score++;
         sound.play();
     }
+
+    void move(sf::Keyboard::Key key) {
+        if (key == sf::Keyboard::A && this->x > 0) {
+            this->x--;
+        } else if (key == sf::Keyboard::W && this->y > 0) {
+            this->y--;
+        } else if (key == sf::Keyboard::D && this->x < (W_WINDOW / STEP) - 1) {
+            this-> x++;
+        } else if (key == sf::Keyboard::S && this->y < (H_WINDOW / STEP) - 1) {
+            this-> y++;
+        }
+    }
 };
 
 struct Coin {
@@ -143,7 +155,7 @@ int main() {
             if (event.type == sf::Event::Closed) {
                 window.close();
             } else if (event.type == sf::Event::KeyPressed) {
-                moveEntity(event.key.code, runner, {sf::Keyboard::Left, sf::Keyboard::Up, sf::Keyboard::Right, sf::Keyboard::Down});
+                runner.move(event.key.code);
             }
         }   
        
