@@ -62,8 +62,8 @@ struct Coin {
     sf::Sprite sprite;
 
     Coin(int step, sf::Texture& texture) {
-        int rangeW = std::rand() % 9;
-        int rangeH = std::rand() % 7;
+        int rangeW = std::rand() % W_WINDOW / STEP;
+        int rangeH = std::rand() % H_WINDOW / STEP;
 
         this->x = rangeW;
         this->y = rangeH;
@@ -102,18 +102,6 @@ sf::Texture loadTexture(std::string path) {
     sf::Texture texture;
     texture.loadFromFile(path);
     return texture;
-}
-
-void moveEntity(sf::Keyboard::Key key, Entity& entity, std::vector<sf::Keyboard::Key> move) {
-    if (key == move[0] && entity.x > 0) {
-        entity.x--;
-    } else if (key == move[1] && entity.y > 0) {
-        entity.y--;
-    } else if (key == move[2] && entity.x < (W_WINDOW / STEP) - 1) {
-        entity.x++;
-    } else if (key == move[3] && entity.y < (H_WINDOW / STEP) - 1) {
-        entity.y++;
-    }
 }
 
 int main() {
@@ -164,6 +152,7 @@ int main() {
         if (runner.x == goldcoin.x && runner.y == goldcoin.y) {
             runner.upScore(); 
             text.setString("Score: " + std::to_string(runner.score));
+
             if (runner.score < 10) {
                 goldcoin.randPos();
             } else {
