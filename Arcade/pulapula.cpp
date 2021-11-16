@@ -56,24 +56,6 @@ private:
         this->num_criancas++;
     }
 
-    void removerNome(bool achou, int contador, std::string nome) {
-        if (!achou) {
-            std::cout << "Essa crianca nao esta no pula pula.\n";
-        } else {
-            int j = 0;
-            for (auto i = pulando.begin(); i != pulando.end(); i++) {
-                if (j == contador) {
-                    pulando.erase(i);
-                    num_criancas--;
-                    std::cout << nome << " foi pra casa.\n";
-                    return;
-                } else {
-                    j++;
-                }
-            }
-        }
-    }
-
 public:
     Pulapula(int max_crianca = 5, int idade_max = 10) : idade_max {idade_max}, espera {}, pulando {}, max_crianca {max_crianca}, num_criancas {0} {}
 
@@ -108,24 +90,25 @@ public:
     }
     
     void retirarPorNome(std::string nome) {
-        if (num_criancas == 0) {
-            std::cout << "Nao tem ninguem no pula pula.\n";
-            return;
-        }
-        
-        bool achou = false;
-        int contador {0};
-
-        for (auto i : pulando) {
-            if (i->getNome() == nome) {
-                achou = true;
-                break; 
-            } else {
-                contador++;
+        for (auto it = pulando.begin(); it != pulando.end(); ++it) {
+            if ((*it)->getNome() == nome) {
+                pulando.erase(it);
+                num_criancas--;
+                std::cout << nome << " foi pra casa.\n";
+                return;
             }
         }
 
-        removerNome(achou, contador, nome);
+        for (auto it = espera.begin(); it != espera.end(); ++it) {
+            if ((*it)->getNome() == nome) {
+                espera.erase(it);
+                num_criancas--;
+                std::cout << nome << " foi pra casa.\n";
+                return;
+            }
+        }
+
+        std::cout << nome << " nao esta aqui.\n";
     }
 
     friend std::ostream& operator<<(std::ostream& os, Pulapula pp) {
