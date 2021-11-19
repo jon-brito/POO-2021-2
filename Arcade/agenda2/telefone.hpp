@@ -1,0 +1,58 @@
+#pragma once
+#include <iostream>
+using namespace std;
+
+class Telefone {
+private:
+    string tipo;
+    string numero;
+
+public:
+    Telefone(string tipo = "", string numero = "") {
+        if (!validarNumero(numero)) {
+            std::cout << "Telefone invalido.\n";
+        } else {
+            this->tipo = tipo;
+            this->numero = numero;
+            std::cout << "Telefone inserido.\n";
+        }
+    }
+
+    string getTipo() {
+        return this->tipo;
+    }
+
+    string getNumero() {
+        return this->numero;
+    }
+
+    void setTipo(string str) {
+        this->tipo = str;
+    }
+
+    void setNumero(string str) {
+        if (!validarNumero(str)) {
+            std::cout << "Telefone invalido.\n";
+            return;
+        }
+
+        std::cout << "Telefone inserido.\n";
+        this->numero = str;
+    }
+
+    bool validarNumero(string numero) {
+        for (auto c : numero) {
+            if (!((c == 40 || c == 41) || (c == 46) || (c >= 48 && c <= 57))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    friend ostream& operator<<(ostream& os, Telefone telefone) {
+        os << telefone.getTipo() << ":" << telefone.getNumero();
+        return os;
+    }
+
+};
