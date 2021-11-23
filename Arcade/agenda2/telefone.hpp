@@ -9,12 +9,9 @@ private:
 
 public:
     Telefone(string tipo = "", string numero = "") {
-        if (!validarNumero(numero)) {
-            std::cout << "Telefone invalido.\n";
-        } else {
+        if (validarNumero(numero)) {
             this->tipo = tipo;
             this->numero = numero;
-            std::cout << "Telefone inserido.\n";
         }
     }
 
@@ -31,13 +28,9 @@ public:
     }
 
     void setNumero(string str) {
-        if (!validarNumero(str)) {
-            std::cout << "Telefone invalido.\n";
-            return;
+        if (validarNumero(str)) {
+            this->numero = str;
         }
-
-        std::cout << "Telefone inserido.\n";
-        this->numero = str;
     }
 
     bool validarNumero(string numero) {
