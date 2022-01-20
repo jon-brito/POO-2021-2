@@ -18,6 +18,10 @@ public:
         this->nome_usuario = nome_usuario;
     }
 
+    map<int, shared_ptr<Mensagem>>& getTimeLine() {
+        return this->time_line;
+    }
+
     void guardarTimeLine(shared_ptr<Mensagem> tweet) {
         this->time_line[tweet->getId()] = tweet;
     }

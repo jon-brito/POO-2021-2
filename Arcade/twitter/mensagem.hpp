@@ -18,6 +18,10 @@ public:
         return this->id;
     }
 
+    string getRemetente() {
+        return this->remetente;
+    }
+
     void like(string nome) {
         auto it = likes.find(nome);
         if (it == likes.end()) {
@@ -26,7 +30,14 @@ public:
     }
 
     friend ostream& operator<<(ostream& os, const Mensagem& mensagem) {
-        os << "(" << mensagem.remetente << ") - " << mensagem.msg << '\n';
+        os << "(" << mensagem.remetente << ") - " << mensagem.msg;
+        
+        os << " [ ";
+        for (auto user : mensagem.likes) {
+            os << user << ' ';
+        }
+        os << "]\n";
+
         return os;
     }
 

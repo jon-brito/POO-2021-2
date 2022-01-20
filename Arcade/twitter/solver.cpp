@@ -21,9 +21,11 @@ int main() {
 
     sistema.enviarTweet("Henok", "Bom dia, gosto de java");
     sistema.enviarTweet("Freitag", "Meu Deus, tem gente que gosta de java...");
+    cout << sistema.getUsuario("Freitag")->getInbox() << "\n";
     sistema.getUsuario("Freitag")->unfollow(sistema.getUsuario("Henok"));
 
     sistema.enviarTweet("Freitag", "Parei de seguir :eyes:");
+    sistema.getUsuario("Hugo")->like(2);
     sistema.enviarTweet("Henok", "Deixaram de me seguir :sob:");
     sistema.enviarTweet("Hugo", "Meu Deus... Henok cancelado por usar java!");
 

@@ -53,6 +53,7 @@ public:
         other->seguidores[this->nome] = shared_from_this();
     }
 
+    //APAGAR TWEETS DA PESSOA QUE VC PAROU DE SEGUIR DA SUA TIMELINE
     void unfollow(shared_ptr<Usuario> other) {
         if (other == nullptr) {
             cout << "Usuario nao cadastrado.\n";
@@ -65,6 +66,13 @@ public:
         }
 
         cout << this->nome << " parou de seguir " << other->getNome() << '\n';
+
+        for (auto [id, Mensagem] : this->inbox.getTimeLine()) {
+            if (Mensagem->getRemetente() == other->getNome()) {
+                this->inbox.getTimeLine().erase(id);
+            }
+        }
+
         this->seguindo.erase(other->getNome());
         other->seguidores.erase(this->nome);
     }
@@ -76,6 +84,18 @@ public:
             seguidor.second->inbox.guardarTimeLine(tweet);
         }
     }
+
+    //CRIAR UMA FUNCAO PARA RETWEETAR UM TWEET NA TIME LINE
+
+    void like(int tweetId) {
+        auto time_line = inbox.getTimeLine();
+        auto it = time_line.find(tweetId);
+
+        if (it != time_line.end()) {
+            it->second->like(this->nome);
+        }
+    }
+
 
     friend ostream& operator<<(ostream& os, const Usuario& user) {
         os << "* " << user.getNome() << '\n';
