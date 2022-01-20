@@ -48,6 +48,19 @@ public:
         this->getUsuario(nome)->tweetar(criarTweet(nome, msg));
     }
 
+    void removerUsuario(string nome) {
+        auto it = usuarios.find(nome);
+        if (it != usuarios.end()) {
+            it->second->deletar();
+            this->usuarios.erase(nome);
+                        
+            cout << nome << " foi removido do sistema.\n";
+            return;
+        }
+
+        cout << nome << " nao esta no sistema.\n";
+    }
+
     friend ostream& operator<<(ostream& os, const Controlador& cont) {
         os << "\n---------------------------------\n";
         for (auto user : cont.usuarios) {

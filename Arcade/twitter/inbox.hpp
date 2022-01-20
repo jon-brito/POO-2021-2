@@ -26,14 +26,30 @@ public:
         this->time_line[tweet->getId()] = tweet;
     }
 
-    friend ostream& operator<<(ostream& os, const Inbox& inbox) {
+    void deletarApagadas(const vector<int>& id_deletados) {
+        for (auto id : id_deletados) {
+            this->time_line.erase(id);
+        }
+    }
+
+    friend ostream& operator<<(ostream& os, Inbox& inbox) {
+        vector<int> id_deletados {};
+
         os << "\n=========================================\n";
         os << "Ibox do(a) " << inbox.nome_usuario << '\n';
         for (auto [num, msg] : inbox.time_line) {
-            os << num << ' ' << *msg;
+            if (msg->getDeletada()) {
+                id_deletados.push_back(num);
+            }
+            
+            else {
+                os << num << ' ' << *msg;
+            }
+            
         } 
         os << "=========================================\n";
 
+        inbox.deletarApagadas(id_deletados);
         return os;
     }
 };

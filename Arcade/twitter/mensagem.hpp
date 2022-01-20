@@ -10,16 +10,25 @@ private:
     string remetente;
     int id;
     set<string> likes;
+    bool deletada;
 
 public:
-    Mensagem(int id, string remetente, string msg) : id{id}, remetente{remetente}, msg{msg} {}
+    Mensagem(int id, string remetente, string msg) : id{id}, remetente{remetente}, msg{msg}, deletada{false} {}
 
     int getId() const {
         return this->id;
     }
 
-    string getRemetente() {
+    string getRemetente() const {
         return this->remetente;
+    }
+
+    bool getDeletada() const {
+        return this->deletada;
+    }
+
+    void setDeletada() {
+        this->deletada = true;
     }
 
     void like(string nome) {

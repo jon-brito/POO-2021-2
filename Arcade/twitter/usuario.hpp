@@ -27,7 +27,11 @@ public:
         return this->seguidores;
     }
 
-    Inbox getInbox() {
+    map<string, shared_ptr<Usuario>>& getSeguindo() {
+        return this->seguindo;
+    }
+
+    Inbox& getInbox() {
         return this->inbox;
     }
 
@@ -53,7 +57,6 @@ public:
         other->seguidores[this->nome] = shared_from_this();
     }
 
-    //APAGAR TWEETS DA PESSOA QUE VC PAROU DE SEGUIR DA SUA TIMELINE
     void unfollow(shared_ptr<Usuario> other) {
         if (other == nullptr) {
             cout << "Usuario nao cadastrado.\n";
@@ -96,6 +99,19 @@ public:
         }
     }
 
+    void deletar() {
+        auto time_line = this->inbox.getTimeLine();
+        for (auto [id, msg] : time_line) {
+            if (msg->getRemetente() == this->nome) {
+                msg->setDeletada();
+            }
+        }
+
+        for (auto seguidor : seguidores) {
+            auto& seguindo_do_seguidor = seguidor.second->getSeguindo();
+            seguindo_do_seguidor.erase(this->nome);            
+        }
+    }
 
     friend ostream& operator<<(ostream& os, const Usuario& user) {
         os << "* " << user.getNome() << '\n';

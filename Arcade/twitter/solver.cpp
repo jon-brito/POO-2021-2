@@ -7,32 +7,22 @@ using namespace std;
 int main() {
     Controlador sistema;
 
-    sistema.addUsuario("Hugo");
-    sistema.addUsuario("Henok");
-    sistema.addUsuario("Freitag");
-    cout << "\n";
+    sistema.addUsuario("user1");
+    sistema.addUsuario("user2");
+    sistema.addUsuario("user3");
 
-    sistema.getUsuario("Hugo")->seguir(sistema.getUsuario("Henok"));
-    sistema.getUsuario("Hugo")->seguir(sistema.getUsuario("Freitag"));
-    sistema.getUsuario("Freitag")->seguir(sistema.getUsuario("Henok"));
-    sistema.getUsuario("Freitag")->seguir(sistema.getUsuario("Hugo"));
-    sistema.getUsuario("Henok")->seguir(sistema.getUsuario("Freitag"));
-    cout << sistema << "\n";
+    sistema.getUsuario("user1")->seguir(sistema.getUsuario("user2"));
+    sistema.getUsuario("user1")->seguir(sistema.getUsuario("user3"));
+    sistema.getUsuario("user3")->seguir(sistema.getUsuario("user2"));
 
-    sistema.enviarTweet("Henok", "Bom dia, gosto de java");
-    sistema.enviarTweet("Freitag", "Meu Deus, tem gente que gosta de java...");
-    cout << sistema.getUsuario("Freitag")->getInbox() << "\n";
-    sistema.getUsuario("Freitag")->unfollow(sistema.getUsuario("Henok"));
+    cout << sistema << '\n';
 
-    sistema.enviarTweet("Freitag", "Parei de seguir :eyes:");
-    sistema.getUsuario("Hugo")->like(2);
-    sistema.enviarTweet("Henok", "Deixaram de me seguir :sob:");
-    sistema.enviarTweet("Hugo", "Meu Deus... Henok cancelado por usar java!");
+    sistema.enviarTweet("user2", "nossa o tt ta um sacooooo :(((");
+    sistema.getUsuario("user1")->like(0);
+    cout << sistema.getUsuario("user1")->getInbox() << '\n';
 
-    cout << sistema.getUsuario("Henok")->getInbox() << "\n";
-    cout << sistema.getUsuario("Freitag")->getInbox() << "\n";
-    cout << sistema.getUsuario("Hugo")->getInbox() << "\n";
-
+    sistema.removerUsuario("user2");
+    cout << sistema.getUsuario("user1")->getInbox() << '\n';
     cout << sistema << '\n';
 
     return 0;
