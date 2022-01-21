@@ -23,7 +23,7 @@ public:
         return this->nome;
     }
 
-    map<string, shared_ptr<Usuario>> getSeguidores() {
+    map<string, shared_ptr<Usuario>>& getSeguidores() {
         return this->seguidores;
     }
 
@@ -107,9 +107,12 @@ public:
             }
         }
 
-        for (auto seguidor : seguidores) {
+        for (auto& seguidor : seguidores) {
             auto& seguindo_do_seguidor = seguidor.second->getSeguindo();
             seguindo_do_seguidor.erase(this->nome);            
+
+            auto& seguindores_do_seguidor = seguidor.second->getSeguidores();
+            seguindores_do_seguidor.erase(this->nome);    
         }
     }
 

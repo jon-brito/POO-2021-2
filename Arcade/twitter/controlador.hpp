@@ -48,6 +48,15 @@ public:
         this->getUsuario(nome)->tweetar(criarTweet(nome, msg));
     }
 
+    void enviarRetweet(string nome, int tweetId, string msg) {
+        auto usuario = this->getUsuario(nome);
+        auto tweet_original = usuario->getInbox().getMensagem(tweetId);
+
+        auto retweet = criarTweet(nome, msg);
+        retweet->setRetweet(tweet_original);
+        this->getUsuario(nome)->tweetar(retweet);
+    }
+
     void removerUsuario(string nome) {
         auto it = usuarios.find(nome);
         if (it != usuarios.end()) {

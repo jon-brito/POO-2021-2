@@ -10,7 +10,6 @@ class Inbox {
 private:
     string nome_usuario;
     map<int, shared_ptr<Mensagem>> time_line;
-
 public:
     Inbox() {}
 
@@ -20,6 +19,13 @@ public:
 
     map<int, shared_ptr<Mensagem>>& getTimeLine() {
         return this->time_line;
+    }
+
+    shared_ptr<Mensagem>& getMensagem(int tweetId) {
+        auto it = this->time_line.find(tweetId);
+        if (it != this->time_line.end()) {
+            return it->second;
+        }
     }
 
     void guardarTimeLine(shared_ptr<Mensagem> tweet) {
@@ -35,19 +41,20 @@ public:
     friend ostream& operator<<(ostream& os, Inbox& inbox) {
         vector<int> id_deletados {};
 
-        os << "\n=========================================\n";
+        os << "\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n";
         os << "Ibox do(a) " << inbox.nome_usuario << '\n';
-        for (auto [num, msg] : inbox.time_line) {
-            if (msg->getDeletada()) {
-                id_deletados.push_back(num);
+
+        for (auto it = inbox.time_line.rbegin(); it != inbox.time_line.rend(); it++) {
+            if (it->second->getDeletada()) {
+                id_deletados.push_back(it->second->getId());
             }
-            
+
             else {
-                os << num << ' ' << *msg;
+                os << *it->second;
             }
-            
-        } 
-        os << "=========================================\n";
+        }
+
+        os << "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n";
 
         inbox.deletarApagadas(id_deletados);
         return os;

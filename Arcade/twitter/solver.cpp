@@ -7,23 +7,51 @@ using namespace std;
 int main() {
     Controlador sistema;
 
-    sistema.addUsuario("user1");
-    sistema.addUsuario("user2");
-    sistema.addUsuario("user3");
+    sistema.addUsuario("goku");
+    sistema.addUsuario("sara");
+    sistema.addUsuario("tina");
 
-    sistema.getUsuario("user1")->seguir(sistema.getUsuario("user2"));
-    sistema.getUsuario("user1")->seguir(sistema.getUsuario("user3"));
-    sistema.getUsuario("user3")->seguir(sistema.getUsuario("user2"));
+    cout << sistema << endl;
 
-    cout << sistema << '\n';
+    sistema.getUsuario("goku")->seguir(sistema.getUsuario("sara"));
+    sistema.getUsuario("goku")->seguir(sistema.getUsuario("tina"));
+    sistema.getUsuario("sara")->seguir(sistema.getUsuario("tina"));
 
-    sistema.enviarTweet("user2", "nossa o tt ta um sacooooo :(((");
-    sistema.getUsuario("user1")->like(0);
-    cout << sistema.getUsuario("user1")->getInbox() << '\n';
+    cout << sistema << endl;
 
-    sistema.removerUsuario("user2");
-    cout << sistema.getUsuario("user1")->getInbox() << '\n';
-    cout << sistema << '\n';
+    sistema.enviarTweet("sara", "hoje estou triste");
+    sistema.enviarTweet("tina", "ganhei chocolate");
+    sistema.enviarTweet("sara", "partiu ru");
+    sistema.enviarTweet("tina", "chocolate ruim");
+    sistema.enviarTweet("goku", "internet maldita");
+
+    cout << sistema.getUsuario("goku")->getInbox() << endl;
+    cout << sistema.getUsuario("tina")->getInbox() << endl;
+    cout << sistema.getUsuario("sara")->getInbox() << endl;
+
+    sistema.getUsuario("sara")->like(1);
+    sistema.getUsuario("goku")->like(1);
+    sistema.getUsuario("sara")->like(3);
+
+    cout << sistema.getUsuario("sara")->getInbox() << endl;
+    cout << sistema.getUsuario("goku")->getInbox() << endl;
+
+    sistema.getUsuario("goku")->unfollow(sistema.getUsuario("tina"));
+    cout << sistema << endl;
+    cout << sistema.getUsuario("goku")->getInbox() << endl;
+
+    sistema.enviarRetweet("sara", 3, "olha goku, ela nao gostou do seu chocolate");
+    cout << sistema.getUsuario("sara")->getInbox() << endl;
+    cout << sistema.getUsuario("goku")->getInbox() << endl;
+
+    sistema.getUsuario("tina")->seguir(sistema.getUsuario("sara"));
+    cout << sistema << endl;
+
+    sistema.removerUsuario("tina");
+    cout << sistema << endl;
+
+    cout << sistema.getUsuario("goku")->getInbox() << endl;
+    cout << sistema.getUsuario("sara")->getInbox() << endl;
 
     return 0;
 }

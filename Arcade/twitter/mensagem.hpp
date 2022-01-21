@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <set>
+#include <memory>
 using namespace std;
 
 class Mensagem {
@@ -11,9 +12,10 @@ private:
     int id;
     set<string> likes;
     bool deletada;
+    shared_ptr<Mensagem> retweet;
 
 public:
-    Mensagem(int id, string remetente, string msg) : id{id}, remetente{remetente}, msg{msg}, deletada{false} {}
+    Mensagem(int id, string remetente, string msg) : id{id}, remetente{remetente}, msg{msg}, deletada{false}, retweet{nullptr} {}
 
     int getId() const {
         return this->id;
@@ -31,6 +33,10 @@ public:
         this->deletada = true;
     }
 
+    void setRetweet(shared_ptr<Mensagem> retweet) {
+        this->retweet = retweet;
+    }
+
     void like(string nome) {
         auto it = likes.find(nome);
         if (it == likes.end()) {
@@ -38,16 +44,39 @@ public:
         }
     }
 
-    friend ostream& operator<<(ostream& os, const Mensagem& mensagem) {
-        os << "(" << mensagem.remetente << ") - " << mensagem.msg;
-        
-        os << " [ ";
-        for (auto user : mensagem.likes) {
-            os << user << ' ';
-        }
-        os << "]\n";
+    friend ostream& operator<<(ostream& os, const Mensagem& mensagem) {       
+        // if (mensagem.retweet != nullptr) {
+        //     os << *mensagem.retweet;
+        //     mensagem.retweet->addTab();
+        // }
+
+        // os << mensagem.tab << mensagem.id << " (" << mensagem.remetente << ") - " << mensagem.msg << " [ ";
+        // for (auto user : mensagem.likes) {
+        //     os << user << ' ';
+        // }
+        // os << "]\n";
+
+        auto* proximo_retweet = &mensagem;
+        int tab = 0;
+
+        do {
+            if (proximo_retweet->getDeletada()) {
+                os << string(tab * 2, ' ') << " Esse tweet foi deletado.\n";
+            }
+            
+            else {
+                os << string(tab * 2, ' ') << proximo_retweet->id << " (" << proximo_retweet->remetente << ") - " << proximo_retweet->msg << " [ ";           
+                for (auto& user : proximo_retweet->likes) {
+                    os << user << ' ';
+                }            
+                os << "]\n";
+            }
+
+            proximo_retweet = proximo_retweet->retweet.get();
+            tab++;
+
+        } while (proximo_retweet != nullptr);
 
         return os;
     }
-
 };
