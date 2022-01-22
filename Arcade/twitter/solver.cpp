@@ -5,53 +5,86 @@
 using namespace std;
 
 int main() {
-    Controlador sistema;
+    Controlador sistema; 
 
-    sistema.addUsuario("goku");
-    sistema.addUsuario("sara");
-    sistema.addUsuario("tina");
+    while(true) {
+        string cmd {};
+        cin >> cmd;
 
-    cout << sistema << endl;
+        if (cmd == "end") {
+            break;
+        } 
+        
+        else if (cmd == "add") {
+            string nome {};
+            cin >> nome;
+            sistema.addUsuario(nome);
+        } 
+        
+        else if (cmd == "rm") {
+            string nome {};
+            cin >> nome;
+            sistema.removerUsuario(nome);
+        }  
+        
+        else if (cmd == "show") {
+            std::cout << sistema << '\n';
+        } 
+        
+        else if (cmd == "follow") {
+            string autor {}, receptor {};
+            cin >> autor >> receptor;
+            sistema.getUsuario(autor)->seguir(sistema.getUsuario(receptor));
+        } 
+        
+        else if (cmd == "unfollow") {
+            string autor {}, receptor {};
+            cin >> autor >> receptor;
+            sistema.getUsuario(autor)->unfollow(sistema.getUsuario(receptor));
+        } 
+        
+        else if (cmd == "tt") {
+            string nome {}, mensagem {};
+            cin >> nome;
+            getline(cin, mensagem);
+            sistema.enviarTweet(nome, mensagem);
+        } 
+        
+        else if (cmd == "like") {
+            string nome {};
+            int id;
+            cin >> nome >> id;
+            sistema.getUsuario(nome)->like(id);
+        }
+        
+        else if (cmd == "timeline") {
+            string nome {};
+            cin >> nome;
+            cout << sistema.getUsuario(nome)->getInbox();
+        } 
+        
+        else if (cmd == "rt") {
+            string nome {}, mensagem {};
+            int id {};
+            cin >> nome >> id;
+            getline(cin, mensagem);
+            sistema.enviarRetweet(nome, id, mensagem);            
+        }
 
-    sistema.getUsuario("goku")->seguir(sistema.getUsuario("sara"));
-    sistema.getUsuario("goku")->seguir(sistema.getUsuario("tina"));
-    sistema.getUsuario("sara")->seguir(sistema.getUsuario("tina"));
+        else if (cmd == "clear") {
+            #if defined(_WIN32) || defined(_WIN64)
+                system("cls");
+            #else
+                system("clear");
+            #endif
+        }
 
-    cout << sistema << endl;
+        else {
+            std::cout << "fail: comando invalido" << '\n';
+        }
 
-    sistema.enviarTweet("sara", "hoje estou triste");
-    sistema.enviarTweet("tina", "ganhei chocolate");
-    sistema.enviarTweet("sara", "partiu ru");
-    sistema.enviarTweet("tina", "chocolate ruim");
-    sistema.enviarTweet("goku", "internet maldita");
-
-    cout << sistema.getUsuario("goku")->getInbox() << endl;
-    cout << sistema.getUsuario("tina")->getInbox() << endl;
-    cout << sistema.getUsuario("sara")->getInbox() << endl;
-
-    sistema.getUsuario("sara")->like(1);
-    sistema.getUsuario("goku")->like(1);
-    sistema.getUsuario("sara")->like(3);
-
-    cout << sistema.getUsuario("sara")->getInbox() << endl;
-    cout << sistema.getUsuario("goku")->getInbox() << endl;
-
-    sistema.getUsuario("goku")->unfollow(sistema.getUsuario("tina"));
-    cout << sistema << endl;
-    cout << sistema.getUsuario("goku")->getInbox() << endl;
-
-    sistema.enviarRetweet("sara", 3, "olha goku, ela nao gostou do seu chocolate");
-    cout << sistema.getUsuario("sara")->getInbox() << endl;
-    cout << sistema.getUsuario("goku")->getInbox() << endl;
-
-    sistema.getUsuario("tina")->seguir(sistema.getUsuario("sara"));
-    cout << sistema << endl;
-
-    sistema.removerUsuario("tina");
-    cout << sistema << endl;
-
-    cout << sistema.getUsuario("goku")->getInbox() << endl;
-    cout << sistema.getUsuario("sara")->getInbox() << endl;
+        cout << '\n';
+    }
 
     return 0;
 }
