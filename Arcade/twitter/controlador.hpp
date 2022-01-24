@@ -29,14 +29,13 @@ public:
             return it->second;
         }
 
-        return nullptr;
+        throw TweetException("erro: usuario nao cadastrado");
     }
 
     void addUsuario(string nome) {
         auto it = usuarios.find(nome);
         if (it != usuarios.end()) {
-            cout << "Usuario já cadastrado(a).\n";
-            return;
+            throw TweetException("erro: usuario ja cadastrado");
         }
 
         cout << nome << " foi cadastrado(a).\n";
@@ -67,7 +66,7 @@ public:
             return;
         }
 
-        cout << nome << " nao esta no sistema.\n";
+        throw TweetException("erro: usuario nao cadastrado");
     }
 
     friend ostream& operator<<(ostream& os, const Controlador& cont) {

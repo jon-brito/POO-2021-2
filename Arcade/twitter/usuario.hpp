@@ -37,19 +37,16 @@ public:
 
     void seguir(shared_ptr<Usuario> other) {
         if (other == nullptr) {
-            cout << "Usuario nao cadastrado.\n";
-            return;
+            throw TweetException("erro: usuario nao cadastrado");
         }
         
         if (other->getNome() == this->nome) {
-            cout << "Nao tem como se auto-seguir... ou tem?\n";
-            return;
+            throw TweetException("erro: nao pode dar follow em voce mesmo");
         }
 
         auto it = this->seguindo.find(other->getNome());
         if (it != this->seguindo.end()) {
-            cout << this->nome << " ja segue " << other->getNome() << '\n';
-            return;
+            throw TweetException("erro: usuarios ja se seguem");
         }
 
         cout << this->nome << " esta seguindo " << other->getNome() << '\n';
@@ -59,17 +56,19 @@ public:
 
     void unfollow(shared_ptr<Usuario> other) {
         if (other == nullptr) {
-            cout << "Usuario nao cadastrado.\n";
-            return;
+            throw TweetException("erro: usuario nao cadastrado");
         }
         
         if (other->getNome() == this->nome) {
-            cout << "Nao tem como se auto-deseguir... ou tem?\n";
-            return;
+            throw TweetException("erro: nao pode dar unfollow em voce mesmo");
+        }
+
+        auto it = this->seguindo.find(other->getNome());
+        if (it == this->seguindo.end()) {
+            throw TweetException("erro: usuarios nao se seguem");
         }
 
         cout << this->nome << " parou de seguir " << other->getNome() << '\n';
-
         for (auto [id, Mensagem] : this->inbox.getTimeLine()) {
             if (Mensagem->getRemetente() == other->getNome()) {
                 this->inbox.getTimeLine().erase(id);
@@ -88,15 +87,16 @@ public:
         }
     }
 
-    //CRIAR UMA FUNCAO PARA RETWEETAR UM TWEET NA TIME LINE
-
     void like(int tweetId) {
         auto time_line = inbox.getTimeLine();
         auto it = time_line.find(tweetId);
 
         if (it != time_line.end()) {
             it->second->like(this->nome);
+            return;
         }
+
+        throw TweetException("erro: tweet nao encontrado");
     }
 
     void deletar() {

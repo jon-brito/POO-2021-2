@@ -5,6 +5,17 @@
 #include <memory>
 using namespace std;
 
+class TweetException : public exception {
+    string message;
+public:
+    TweetException(const string& message) : 
+        message(message) {
+    }
+    const char* what() const noexcept override {
+        return message.c_str(); 
+    }
+};
+
 class Mensagem {
 private:
     string msg;
@@ -44,18 +55,7 @@ public:
         }
     }
 
-    friend ostream& operator<<(ostream& os, const Mensagem& mensagem) {       
-        // if (mensagem.retweet != nullptr) {
-        //     os << *mensagem.retweet;
-        //     mensagem.retweet->addTab();
-        // }
-
-        // os << mensagem.tab << mensagem.id << " (" << mensagem.remetente << ") - " << mensagem.msg << " [ ";
-        // for (auto user : mensagem.likes) {
-        //     os << user << ' ';
-        // }
-        // os << "]\n";
-
+    friend ostream& operator<<(ostream& os, const Mensagem& mensagem) {
         auto* proximo_retweet = &mensagem;
         int tab = 0;
 
